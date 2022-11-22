@@ -10,15 +10,15 @@ import (
 var mySigningKey = []byte("mysupersecretphrase")
 
 func GenerateJWT() (string, error) {
-	token := jwt.New(jwt.SigningMethodHS256)
+	token := jwt.New(jwt.SigningMethodHS256) // crate new jwt token
 
-	claims := token.Claims.(jwt.MapClaims)
+	claims := token.Claims.(jwt.MapClaims) // add chaims detail
 
 	claims["authorized"] = true
 	claims["user"] = "Sitthisak Bannob"
 	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
 
-	tokenString, err := token.SignedString(mySigningKey)
+	tokenString, err := token.SignedString(mySigningKey) // sign token with secret key
 
 	if err != nil {
 		fmt.Errorf("Something went wrong: %s", err.Error())

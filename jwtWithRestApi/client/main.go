@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -26,13 +28,22 @@ func GenerateJWT() (string, error) {
 	return tokenString, err
 }
 
+func homePage(w http.ResponseWriter, r *http.Request) {
+	validToken, err := GenerateJWT()
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+
+	fmt.Fprintf(w, validToken)
+}
+
+func handleRequest() {
+	http.HandleFunc("/", homePage)
+	log.Fatal(http.ListenAndServe(":9001", nil))
+}
+
 func main() {
 	fmt.Println("My Simple Client")
 
-	tokenString, err := GenerateJWT()
-	if err != nil {
-		fmt.Println("Error generating token")
-	}
-
-	fmt.Println(tokenString)
+	handleRequest()
 }

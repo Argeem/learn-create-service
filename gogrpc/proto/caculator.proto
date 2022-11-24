@@ -1,0 +1,25 @@
+// build req&res from proto file to server folder (go service)
+// protoc name.proto --go_out=../server 
+
+// build service from proto file to server folder
+// protoc name.proto --go-grpc_out=../server
+
+// do the same thing in client
+
+syntax = "proto3";
+
+package services;
+option go_package="./services"; // ./services is package in Golang
+
+service Calculator{ // create services
+    rpc Hello(HelloRequest) returns(HelloResponse); // rpc name(request) returns(response)
+}
+
+message HelloRequest{ // what services want to get from clients
+    string name = 1; // type name = tag;
+}
+
+message HelloResponse{ // whet services provide to client
+    string result = 1;
+}
+

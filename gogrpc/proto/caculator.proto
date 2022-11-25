@@ -13,6 +13,7 @@ option go_package="./services"; // ./services is package in Golang
 
 service Calculator{ // create services
     rpc Hello(HelloRequest) returns(HelloResponse); // rpc name(request) returns(response)
+    rpc Fibonacci(FibonacciRequest) returns(stream FibonacciResponse);
 }
 
 message HelloRequest{ // what services want to get from clients
@@ -23,3 +24,10 @@ message HelloResponse{ // whet services provide to client
     string result = 1;
 }
 
+message FibonacciRequest{
+    uint32 n = 1;
+}
+
+message FibonacciResponse{
+    uint32 result = 1;
+}
